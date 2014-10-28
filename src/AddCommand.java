@@ -18,12 +18,17 @@ public class AddCommand implements Command
 
     public void execute()
     {
-
+        if(this.db.get(this.key) == null)
+        {
+            this.db.add(this.key,this.val);
+        }
     }
 
     public void undo()
     {
-
+        this.db.remove(this.key);
+        System.out.println("Undid AddCommand");
+        System.out.println(this.db.toString());
     }
 
 }

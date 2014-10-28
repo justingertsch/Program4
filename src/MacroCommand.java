@@ -24,7 +24,12 @@ public class MacroCommand implements Command
 
     public void undo()
     {
-
+        System.out.println("Begin Undoing Macro");
+        for(int i = commands.size() - 1; i >= 0 ; i--)
+        {
+            commands.get(i).execute();
+        }
+        System.out.println("End Undoing Macro");
     }
 
 }

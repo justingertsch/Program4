@@ -14,7 +14,36 @@ public class TestCommands
 
     public static void main(String[] args)
     {
+        if(args.length == 0)
+        {
+            System.out.println("You must supple a file as a command line argument");
+            System.exit(1);
+        }
 
+        ArrayList<Command> commandList = read(args[0]);
+        if(commandList != null && commandList.size() > 0)
+        {
+            for (int i = 0; i < commandList.size(); i++)
+            {
+                commandList.get(i).execute();
+            }
+        }
+
+        if(dbs.size() > 0)
+        {
+            for (Database db : dbs.values())
+            {
+                db.backup();
+            }
+        }
+
+        if(commandList != null && commandList.size() > 0)
+        {
+            for (int i = (commandList.size() - 1); i >= 0; i--)
+            {
+                commandList.get(i).execute();
+            }
+        }
 
     }
 
@@ -42,8 +71,7 @@ public class TestCommands
                     ArrayList<Command> macrolist = new ArrayList<Command>();
                     Command macro = new MacroCommand(macrolist);
                     commandList.add(macro);
-                    i++;
-                    createCommands(macrolist,lines, i);
+                    createCommands(macrolist,lines, i + 1);
                     break;
 
                 case "E":
@@ -53,7 +81,7 @@ public class TestCommands
         }
     }
 
-    public static Command[] read(String file)
+    public static ArrayList<Command> read(String file)
     {
         // read in file
         Scanner in = null;
@@ -81,7 +109,8 @@ public class TestCommands
                 {
                     val += line[i] + " ";
                 }
-                line[3] = val.trim();
+                if(val != null)
+                    line[3] = val.trim();
             }
             fileLines.add(line);
         }
@@ -91,7 +120,7 @@ public class TestCommands
         ArrayList<Command> commandList = new ArrayList<Command>();
         createCommands(commandList, fileLines, 0);
 
-
+        return commandList;
 
     }
 

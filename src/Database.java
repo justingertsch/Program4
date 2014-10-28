@@ -22,7 +22,7 @@ public class Database
 
     public void add(String key, String val)
     {
-
+        this.data.put(key,val);
     }
 
     public String get(String key)
@@ -32,12 +32,12 @@ public class Database
 
     public void update(String key, String val)
     {
-
+        this.data.put(key,val);
     }
 
     public void remove(String key)
     {
-
+        this.data.remove(key);
     }
 
     public void backup()

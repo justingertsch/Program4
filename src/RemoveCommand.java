@@ -7,6 +7,7 @@ public class RemoveCommand implements Command
 
     private Database db = null;
     private String key = null;
+    private String prevVal = null;
 
     public RemoveCommand(Database db, String key)
     {
@@ -16,11 +17,17 @@ public class RemoveCommand implements Command
 
     public void execute()
     {
-
+        this.prevVal = this.db.get(key);
+        if(this.prevVal != null)
+        {
+            this.db.remove(this.key);
+        }
     }
 
     public void undo()
     {
-
+        this.db.add(this.key,this.prevVal);
+        System.out.println("Undid RemoveCommand");
+        System.out.println(this.db.toString());
     }
 }
